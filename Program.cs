@@ -9,7 +9,12 @@ internal class Program
     {
         bool running = false;
         var menu = new Menu([], "Welcome to the test menu!");
-        menu.AddCommand("0", "Quit the application", MenuOption.Close);
+        menu.AddCommand("q", "Quit the application", MenuOption.Close);
+        var submenu = new Menu([], "###Submenu reached###");
+        submenu.AddCommand("q", "Quit the submenu", MenuOption.Close);
+        menu.AddCommand("s", "Open submenu", MenuOption.CreateOpenSubmenu(submenu));
+
+
         var client = new CLIClient(menu);
         client.Run();
 
