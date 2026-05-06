@@ -5,18 +5,39 @@ namespace Ovn3;
 
 public class CLIPrinter
 {
-    public void PrintOptions(Menu menu)
+    public void PrintOptions(OptionsMenu menu)
     {
         var builder = new StringBuilder();
-        builder.Append('\n');
-        builder.Append(menu.WelcomeMessage);
-        builder.Append('\n');
 
+        if (menu.WelcomeMessage != null)
+        {
+            builder.Append('\n');
+            builder.Append('\n');
+            builder.Append(menu.WelcomeMessage);
+        }
+
+        builder.Append('\n');
         foreach (MenuOption command in menu.Options)
         {
             builder.Append($"{command.key}: {command.description}\n");
         }
 
         Console.WriteLine(builder.ToString());
+    }
+    public void PrintCommandPrompt(Menu menu)
+    {
+        if (menu.CommandPrompt == null) return;
+
+        var builder = new StringBuilder();
+        builder.Append(menu.CommandPrompt);
+        Console.Write(builder.ToString());
+    }
+
+    public void PrintMessage(string message)
+    {
+        var builder = new StringBuilder();
+        builder.Append('\n');
+        builder.Append(message);
+        Console.Write(builder.ToString());
     }
 }

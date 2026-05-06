@@ -27,11 +27,3 @@ public class CLIClient(Menu StartMenu)
         menus.Pop();
     }
 }
-
-/*
-cliclient displays menus
-
-menus have actions
-
-command parser reads input into int/string depending on what is asked for
-*/
