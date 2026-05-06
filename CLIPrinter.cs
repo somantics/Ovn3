@@ -38,6 +38,7 @@ public class CLIPrinter
         var builder = new StringBuilder();
         builder.Append('\n');
         builder.Append(message);
+        builder.Append('\n');
         Console.Write(builder.ToString());
     }
 }

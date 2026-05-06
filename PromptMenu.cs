@@ -6,7 +6,7 @@ public delegate bool BusinessFunction(string input, out string result);
 
 public class PromptMenu : Menu
 {
-    private BusinessFunction action;
+    protected BusinessFunction action;
     public PromptMenu(string? message, string? prompt, BusinessFunction action) : base(message, prompt)
     {
         this.action = action;
@@ -20,7 +20,7 @@ public class PromptMenu : Menu
         {
             bool success = action.Invoke(message, out string result);
             output.PrintMessage(result);
-            
+
             if (success) client.CloseMenu();
         }
         else

@@ -1,62 +1,55 @@
 using System;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace Ovn3;
 
 public class BusinessLogic
 {
-    static void UngdomEllerPensionar()
+    public static bool UngdomEllerPensionar(string input, out string result)
     {
-        Console.Write("Ange ålder: ");
-        string? input = Console.ReadLine();
 
-        if (!int.TryParse(input, out int alder))    // Jämför med int.Parse(input) --> "hej" --> Exception
+        if (!int.TryParse(input, out int alder) || alder < 0)    // Jämför med int.Parse(input) --> "hej" --> Exception
         {
-            Console.WriteLine("Ogiltig ålder.");
-            return;
+            result = "Ogiltig ålder.";
+            return false;
         }
 
         if (alder < 20)
         {
-            Console.WriteLine("Ungdomspris: 80kr");
+            result = "Ungdomspris: 80kr";
         }
         else if (alder > 64)
         {
-            Console.WriteLine("Pensionärspris: 90kr");
+            result = "Pensionärspris: 90kr";
         }
         else
         {
-            Console.WriteLine("Standardpris: 120kr");
+            result = "Standardpris: 120kr";
         }
+
+        return true;
     }
 
-    static void PrisForSallskap()
+    public static bool PrisForSallskap(string[] input, out string result)
     {
-        Console.Write("Hur många personer är ni? ");
-        string? antalInput = Console.ReadLine();
-
-        if (!int.TryParse(antalInput, out int antal) || antal <= 0)
-        {
-            Console.WriteLine("Ogiltigt antal personer.");
-            return;
-        }
-
         int total = 0;
 
-        for (int i = 1; i <= antal; i++)
-        {
-            Console.Write($"Ange ålder för person {i}: ");
-            string? alderInput = Console.ReadLine();
+        var builder = new StringBuilder();
 
-            if (!int.TryParse(alderInput, out int alder) || alder < 0)
+        for (int i = 0; i < input.Length; i++)
+        {
+
+            if (!int.TryParse(input[i], out int alder) || alder < 0)
             {
-                Console.WriteLine("Ogiltig ålder.");
-                return;
+                builder.Append($"Ogiltig ålder på besöjare {i + 1}.\n");
+                result = builder.ToString();
+                return false;
             }
 
             if (alder < 5 || alder > 100)
             {
-                Console.WriteLine($"Person {i}: Gratis");
+                builder.Append($"Person {i + 1}: Gratis\n");
             }
             else if (alder < 20)
             {
@@ -72,21 +65,26 @@ public class BusinessLogic
             }
         }
 
-        Console.WriteLine($"Antal personer: {antal}");
-        Console.WriteLine($"Totalkostnad: {total} kr");
+        builder.Append($"Antal personer: {input.Length}\n");
+        builder.Append($"Totalkostnad: {total} kr\n");
+        result = builder.ToString();
+        return true;
     }
 
-    static void UpprepaTioGanger()
+    public static bool UpprepaTioGanger(string input, out string result)
     {
-        Console.Write("Skriv en text: ");
-        string? text = Console.ReadLine();
+        //Console.Write("Skriv en text: ");
+
+        var builder = new StringBuilder();
+        builder.Append('\n');
 
         for (int i = 1; i <= 10; i++)
         {
-            Console.Write($"{i}. {text} ");
+            builder.Append($"{i}. {input} \n");
         }
 
-        Console.WriteLine();
+        result = builder.ToString();
+        return true;
     }
 
     public static bool DetTredjeOrdet(string input, out string result)

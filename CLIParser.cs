@@ -20,7 +20,16 @@ public class CLIParser
     
     public bool ParseAmount(out int amount)
     {
-        throw new NotImplementedException();
+        string? rawInput = Console.ReadLine();
+
+        if (int.TryParse(rawInput, out int result))
+        {
+            amount = result;
+            return true;
+        }
+
+        amount = 0;
+        return false;
     }
 
     public bool ParseString(out string input)
