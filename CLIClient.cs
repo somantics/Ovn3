@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Ovn3;
 
-public class CLIClient(Menu StartMenu)
+public class CLIClient(Menu StartMenu) : IMenuClient
 {
     readonly private CLIParser parser = new();
     readonly private CLIPrinter output = new();

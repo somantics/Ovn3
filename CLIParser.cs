@@ -1,22 +1,9 @@
-
 using System;
 
 namespace Ovn3;
 
-public class CLIParser
+public class CLIParser: IInputService
 {
-    private int maxAttempts = 5;
-    public int MaxAttempts 
-    {
-        private get
-        {
-            return maxAttempts;
-        }
-        set
-        {
-            maxAttempts = value;
-        }
-    }
     
     public bool ParseAmount(out int amount)
     {

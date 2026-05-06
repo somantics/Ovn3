@@ -1,7 +1,4 @@
-﻿
-using System;
-
-namespace Ovn3;
+﻿namespace Ovn3;
 internal class Program
 {
     static void Main(string[] args)

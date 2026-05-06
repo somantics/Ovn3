@@ -1,4 +1,3 @@
-using System;
 
 namespace Ovn3;
 
@@ -17,5 +16,5 @@ public abstract class Menu(string? message, string? prompt)
         get { return commandPrompt; }
     }
 
-    public abstract void Run(CLIParser parser, CLIPrinter output, CLIClient client);
+    public abstract void Run(IInputService input, IOutputService output, IMenuClient client);
 }

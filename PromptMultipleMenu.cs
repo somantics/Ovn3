@@ -8,15 +8,15 @@ public class PromptMultipleMenu(string? message, string? prompt, BusinessFunctio
     protected int? amount;
     protected List<string> inputs = [];
 
-    public override void Run(CLIParser parser, CLIPrinter output, CLIClient client)
+    public override void Run(IInputService input, IOutputService output, IMenuClient client)
     {
         if (amount is null)
         {
-            PromptAmount(parser, output, client);
+            PromptAmount(input, output);
         }
         
         output.PrintMessage($"Ange ålder (besökare {inputs.Count + 1}): ");
-        if (parser.ParseString(out string message))
+        if (input.ParseString(out string message))
         {
             inputs.Add(message);
         }
@@ -39,10 +39,10 @@ public class PromptMultipleMenu(string? message, string? prompt, BusinessFunctio
         }
     }
 
-    protected void PromptAmount(CLIParser parser, CLIPrinter output, CLIClient client)
+    protected void PromptAmount(IInputService input, IOutputService output)
     {
         output.PrintCommandPrompt(this);
-        if (!parser.ParseAmount(out int result))
+        if (!input.ParseAmount(out int result))
         {
             output.PrintMessage("Not a valid amount.");
             return;

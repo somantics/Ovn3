@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Ovn3;
 
-public class CLIPrinter
+public class CLIPrinter : IOutputService
 {
     public void PrintOptions(OptionsMenu menu)
     {

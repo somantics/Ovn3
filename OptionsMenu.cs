@@ -2,35 +2,31 @@ using System;
 using System.Collections.Generic;
 
 namespace Ovn3;
-public class OptionsMenu : Menu
+public class OptionsMenu(string? message, string? prompt) : Menu(message, prompt)
 {
-    public OptionsMenu(string? message, string? prompt) : base(message, prompt)
-    {
-    }
-
-    private List<MenuOption> options = [];
+    private List<MenuOption> _options = [];
     public List<MenuOption> Options
     {
-        get { return options; }
+        get { return _options; }
     }
 
 
-    public void AddCommand(string key, string description, Action<CLIParser, CLIPrinter, CLIClient> action)
+    public void AddCommand(string key, string description, Action<IInputService, IOutputService, IMenuClient> action)
     {
         MenuOption newCommand = new(key, action, description);
-        options.Add(newCommand);
+        Options.Add(newCommand);
     }
 
-    protected void AwaitOption(CLIParser parser, CLIPrinter output, CLIClient client)
+    protected void AwaitOption(IInputService input, IOutputService output, IMenuClient client)
     {
         output.PrintCommandPrompt(this);
-        if (parser.ParseString(out string input))
+        if (input.ParseString(out string optionText))
         {
             foreach (MenuOption option in Options)
             {
-                if (option.key.Equals(input, StringComparison.OrdinalIgnoreCase))
+                if (option.key.Equals(optionText, StringComparison.OrdinalIgnoreCase))
                 {
-                    option.Invoke(parser, output, client);
+                    option.Invoke(input, output, client);
                     break;
                 }
             }
@@ -38,9 +34,9 @@ public class OptionsMenu : Menu
         
     }
 
-    public override void Run(CLIParser parser, CLIPrinter output, CLIClient client)
+    public override void Run(IInputService input, IOutputService output, IMenuClient client)
     {
         output.PrintOptions(this);
-        AwaitOption(parser, output, client);
+        AwaitOption(input, output, client);
     }
 }

@@ -4,19 +4,14 @@ namespace Ovn3;
 
 public delegate bool BusinessFunction(string input, out string result);
 
-public class PromptMenu : Menu
+public class PromptMenu(string? message, string? prompt, BusinessFunction action) : Menu(message, prompt)
 {
-    protected BusinessFunction action;
-    public PromptMenu(string? message, string? prompt, BusinessFunction action) : base(message, prompt)
-    {
-        this.action = action;
-    }
+    protected BusinessFunction action = action;
 
-
-    public override void Run(CLIParser parser, CLIPrinter output, CLIClient client)
+    public override void Run(IInputService input, IOutputService output, IMenuClient client)
     {
         output.PrintCommandPrompt(this);
-        if (parser.ParseString(out string message))
+        if (input.ParseString(out string message))
         {
             bool success = action.Invoke(message, out string result);
             output.PrintMessage(result);
